@@ -1,0 +1,10 @@
+= link_to spina.select_admin_attachments_path(f.object_name, selected_photo_id: f.object.structure_partable.try(:id)), remote: true, class: "media_picker" do
+  .placeholder
+    %span.button.button-small.button-round{data: {icon: 'U'}}
+      %i.icon.icon-dots
+      =t 'spina.choose_from_library'
+
+  - if f.object.structure_partable && f.object.structure_partable.file.present?
+    .attachment= f.object.structure_partable.name
+
+  = f.hidden_field :structure_partable_id
