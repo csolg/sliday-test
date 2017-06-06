@@ -1,0 +1,23 @@
+%h1= @page.title
+
+= @page.content(:text).try(:html_safe)
+
+- document = @page.parts.where(name: :document).first.try(:partable)
+- if document
+    %hr
+    %h3 Document
+    = link_to document.name, document.file_url 
+
+- structure = @page.content(:structure)
+- if structure
+    %hr
+    %h3 Structure
+    %table{ width: "100%" }
+        - structure.structure_items.each do |item|
+            %tr
+                %td= item.content(:title)
+                - attachment = item.structure_parts.where(name: :attachment).first.try(:partable)
+                - if attachment
+                    %td= link_to attachment.name, attachment.file_url
+
+        
